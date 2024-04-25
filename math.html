@@ -5,6 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Game Cards</title>
 <style>
+    body {
+        font-family: "Roboto", sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        text-align: center;
+        margin-top: 50px; /* Adjust the margin as needed */
+    }
+    #searchInput {
+        margin-bottom: 20px;
+    }
     .card {
         display: block;
         margin-bottom: 10px;
@@ -20,10 +32,15 @@
 </style>
 </head>
 <body>
+    <h1 style="text-align: center;">Coding Games</h1>
+    <h4 style="text-align: center;">Search for games:</h4>
+    <input type="text" id="searchInput" placeholder="Search...">
+    <div id="gameContainer"></div>
+
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const games = [
-            "10-minutes-till-dawn",
+                        "10-minutes-till-dawn",
             "100ng",
             "1v1lol",
             "1v1space",
@@ -454,22 +471,40 @@
             "fall-guys",
             "web-assembly"
         ];
+            // Your game names array here
 
-        const container = document.createElement("div");
+        const container = document.getElementById("gameContainer");
 
-        games.forEach(function(gameName) {
-            const card = document.createElement("a");
-            card.setAttribute("href", `${gameName}/index.html`);
-            card.classList.add("card");
-            card.innerHTML = `
-                <h2>${gameName}</h2>
-                <p>The game: ${gameName} is operated and hosted by MN Games.</p>
-            `;
-            container.appendChild(card);
+        // Function to render cards based on game names array
+        function renderCards(gameNames) {
+            container.innerHTML = ""; // Clear previous cards
+            
+            gameNames.forEach(function(gameName) {
+                const card = document.createElement("a");
+                card.setAttribute("href", `${gameName}/index.html`);
+                card.classList.add("card");
+                card.innerHTML = `
+                    <h2>${gameName}</h2>
+                    <p>The game: ${gameName} is operated and hosted by MN Games.</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Initial render of cards
+        renderCards(games);
+
+        // Event listener for search input
+        const searchInput = document.getElementById("searchInput");
+        searchInput.addEventListener("input", function() {
+            const searchTerm = this.value.toLowerCase();
+            const filteredGames = games.filter(function(gameName) {
+                return gameName.toLowerCase().includes(searchTerm);
+            });
+            renderCards(filteredGames);
         });
-
-        document.body.appendChild(container);
     });
 </script>
 </body>
 </html>
+
